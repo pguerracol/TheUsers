@@ -1,0 +1,38 @@
+
+Validator messages per property:
+RuleFor(user => user.Name)  
+    .NotEmpty().WithMessage("No ha indicado el nombre de usuario.")
+    .Length(2,50).WithMessage("El nombre debe tener una longitud entre 2 y 50 caracteres");
+
+
+Validation depending from other property:
+RuleFor(user => user.Name).NotEqual(user => user.LastName);  
+// Name and LastName should not be the same.
+// Jar Jar is not possible.
+
+
+Validation in function of value of another property.
+Like to check number range Length(7, 12) only when option was checked:
+RuleFor(user => user.PlateNumber).Length(7,12).When(user => user.HasCar); 
+
+
+Extended and Customized Validations
+
+List<string> blackListWords = new List<string>() {"caca", "culo", "pedo", "pis"};
+RuleFor(user => user.LastName).Must(lastname => !blackListWords.Contains(lastname)); 
+// Rule to control bad or inappropiate words are not used in LastName.
+
+// Custom check passing a function.
+
+RuleFor(user => user.BirthDate)
+            .Must(IsOver18)
+            .WithMessage("Tiene que ser mayor de edad para poder registrarse.");
+
+private bool IsOver18(DateTime birthDate)
+    {        
+	return (DateTime.Now.Year - birthDate.Year) >= 18; // way 1.	
+
+        //return DateTime.Now.AddYears(-18) >= birthDate; // way 2.
+    }
+
+

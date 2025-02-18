@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System;
 using TheUsers.Domain.Models;
 
 namespace TheUsers.Api.Validators
@@ -25,12 +24,12 @@ namespace TheUsers.Api.Validators
                 .NotEmpty()
                 .Must(BeAValidDate)
                 .Must(BeAdult)
-                .WithMessage("Date of Birth invalid.");
+                .WithMessage("Date of Birth invalid. >=18 years old");
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .Must(x => x.ToString().Length == 10)
-                .WithMessage("Phone Number invalid.");
+                .WithMessage("Phone Number invalid. 10 digits required.");
         }
 
         private bool BeAValidDate(DateTime date)
@@ -38,11 +37,11 @@ namespace TheUsers.Api.Validators
             return !date.Equals(default(DateTime));
         }
 
-        private bool BeAdult(DateTime date)
+        private bool BeAdult(DateTime birthDate)
         {
             var today = DateTime.Today;
-            var age = today.Year - date.Year;
-            if (date > today.AddYears(-age)) age--;
+            var age = today.Year - birthDate.Year;
+            if (birthDate > today.AddYears(-age)) age--;
             return age >= 18;
         }
     }

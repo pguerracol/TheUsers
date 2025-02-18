@@ -19,7 +19,6 @@ namespace TheUsers
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
-            //builder.Services.AddSingleton(typeof(ILogger), ILogger);
             
             builder.Services.AddSwaggerGen(c =>
             {

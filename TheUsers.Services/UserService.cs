@@ -44,7 +44,7 @@ namespace TheUsers.Services
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new Exception("User not found"); // UserNotFoundException
                 //return null;
             }
             return new UserWithAge
