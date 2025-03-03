@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TheUsers.Api.Validators;
 using TheUsers.Domain.Models;
 using TheUsers.Domain.Services;
@@ -10,7 +9,7 @@ namespace TheUsers.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _userService;        
 
         public UsersController(IUserService userService)
         {
@@ -37,7 +36,7 @@ namespace TheUsers.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-            var validator = new UserValidator();
+            var validator = new UserValidator(); // better: Use automatic validation with middleware, then just one line: if(!ModelSatate.IsValid)
             var validationResult = validator.ValidateAsync(user);
             if (!validationResult.Result.IsValid)
                 return BadRequest(validationResult.Result.Errors);
@@ -50,6 +49,11 @@ namespace TheUsers.Api.Controllers
         [Route("{id}")]
         public IActionResult Put(int id, [FromBody] User user)
         {
+            var validator = new UserValidator(); // better: Use automatic validation with middleware, then just one line: if(!ModelSatate.IsValid)
+            var validationResult = validator.ValidateAsync(user);
+            if (!validationResult.Result.IsValid)
+                return BadRequest(validationResult.Result.Errors);
+
             var existingUser = _userService.GetUserById(id);
             if (existingUser == null)
                 return NotFound();

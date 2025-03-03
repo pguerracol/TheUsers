@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 using TheUsers.Domain.Models;
 using TheUsers.Domain.Repositories;
@@ -7,11 +8,13 @@ namespace TheUsers.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string strConn;
+        private readonly string? strConn;
+        private readonly IConfiguration _configuration;
 
-        public UserRepository()
+        public UserRepository(IConfiguration configuration)
         {
-            strConn = "Data Source=(local)\\SQLEXPRESS;Initial Catalog=Users;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;";
+            _configuration = configuration;
+            strConn = _configuration.GetConnectionString("DefaultConnection");
         }
 
         public IEnumerable<User> GetAll()

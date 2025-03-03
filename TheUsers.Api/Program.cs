@@ -1,7 +1,9 @@
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TheUsers.Api.Extensions;
 using TheUsers.Data.Repositories;
+using TheUsers.Domain.Models;
 using TheUsers.Domain.Repositories;
 using TheUsers.Domain.Services;
 using TheUsers.Services;
@@ -14,12 +16,14 @@ namespace TheUsers
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container.            
             builder.Services.AddControllers();
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
-            
+            builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
+            // IOptions<ConnectionStrings> connectionStrings
+
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new() { Title = "TheUsers.Api", Version = "v1" });

@@ -36,3 +36,5 @@ private bool IsOver18(DateTime birthDate)
     }
 
 
+Onion architecture image
+https://pbs.twimg.com/media/F7p7vBEXUAAiPSR?format=jpg&name=medium

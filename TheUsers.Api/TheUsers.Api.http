@@ -1,0 +1,41 @@
+﻿@TheUsers.Api_HostAddress = http://localhost:5062
+
+GET {{TheUsers.Api_HostAddress}}/api/users
+
+###
+
+@id=0
+GET {{TheUsers.Api_HostAddress}}/api/users/{{id}}
+
+###
+
+
+// to improve in POST endpoint.
+// "id": 0, should not be exposed.
+// check email is unique in db.
+POST {{TheUsers.Api_HostAddress}}/api/users
+Content-Type: application/json
+{  
+  "id": 0,
+  "firstName": "pablo",
+  "lastName": "guerra",
+  "email": "pablo.guerra@epam.com",
+  "dateOfBirth": "1979-02-22T00:00:00",
+  "phoneNumber": 1234567890
+}
+
+###
+
+DELETE {{TheUsers.Api_HostAddress}}/api/users/{{id}}
+
+###
+
+PUT {{TheUsers.Api_HostAddress}}/api/users/{{id}}
+Content-Type: application/json
+
+{
+  //User
+}
+
+###
+

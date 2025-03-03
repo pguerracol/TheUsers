@@ -1,4 +1,5 @@
 ﻿using TheUsers.Domain.Models;
+using TheUsers.Domain.Models.Exceptions;
 using TheUsers.Domain.Repositories;
 using TheUsers.Domain.Services;
 
@@ -42,10 +43,9 @@ namespace TheUsers.Services
         {
             var user = _userRepository.GetById(id);
 
-            if (user == null)
+            if (user.FirstName == null)
             {
-                throw new Exception("User not found"); // UserNotFoundException
-                //return null;
+                throw new UserNotFoundException();
             }
             return new UserWithAge
             {
